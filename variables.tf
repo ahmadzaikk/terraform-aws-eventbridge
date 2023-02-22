@@ -199,6 +199,11 @@ variable "attach_ecs_policy" {
   type        = bool
   default     = false
 }
+variable "attach_pipeline_policy" {
+  description = "Controls whether the ECS policy should be added to IAM role for EventBridge Target"
+  type        = bool
+  default     = false
+}
 
 variable "attach_lambda_policy" {
   description = "Controls whether the Lambda Function policy should be added to IAM role for EventBridge Target"
