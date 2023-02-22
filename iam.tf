@@ -238,6 +238,37 @@ resource "aws_iam_policy_attachment" "lambda" {
   roles      = [aws_iam_role.eventbridge[0].name]
   policy_arn = aws_iam_policy.lambda[0].arn
 }
+#########################
+# CodePipelin
+#########################
+
+data "aws_iam_policy_document" "pipeline" {
+  count = local.create_role && var.attach_pipeline_policy ? 1 : 0
+
+  statement {
+    sid       = "pipelineAccess"
+    effect    = "Allow"
+    actions   = ["codepipeline:StartPipelineExecution"]
+    resources = var.pipeline_target_arns
+  }
+}
+
+resource "aws_iam_policy" "pipeline" {
+  count = local.create_role && var.attach_pipeline_policy ? 1 : 0
+
+  name   = "${local.role_name}-pipeline"
+  policy = data.aws_iam_policy_document.pipeline[0].json
+
+  tags = merge({ Name = "${local.role_name}-pipeline" }, var.tags)
+}
+
+resource "aws_iam_policy_attachment" "pipeline" {
+  count = local.create_role && var.attach_pipeline_policy ? 1 : 0
+
+  name       = "${local.role_name}-pipeline"
+  roles      = [aws_iam_role.eventbridge[0].name]
+  policy_arn = aws_iam_policy.pipeline[0].arn
+}
 
 ######################
 # StepFunction Config
