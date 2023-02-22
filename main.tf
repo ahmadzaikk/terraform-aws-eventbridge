@@ -134,15 +134,15 @@ resource "aws_cloudwatch_event_target" "this" {
     }
   }
   dynamic "pipeline_target" {
-    for_each = lookup(each.value, "pipeline_target", null) != null ? [each.value.pipeline_target] : []
+    for_each = lookup(each.value, "pipeline_target", null) != null ? [
+      each.value.pipeline_target
+    ] : []
 
     content {
       name           = pipeline_target.value.name
       arn            = pipeline_target.value.arn
-      
     }
   }
-
   dynamic "kinesis_target" {
     for_each = lookup(each.value, "kinesis_target", null) != null ? [true] : []
 
