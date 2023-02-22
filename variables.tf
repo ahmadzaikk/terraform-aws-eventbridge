@@ -264,7 +264,11 @@ variable "lambda_target_arns" {
   type        = list(string)
   default     = []
 }
-
+variable "pipeline_target_arns" {
+  description = "The Amazon Resource Name (ARN) of the Lambda Functions you want to use as EventBridge targets"
+  type        = list(string)
+  default     = []
+}
 variable "sfn_target_arns" {
   description = "The Amazon Resource Name (ARN) of the StepFunctions you want to use as EventBridge targets"
   type        = list(string)
