@@ -249,7 +249,7 @@ data "aws_iam_policy_document" "pipeline" {
     sid       = "pipelineAccess"
     effect    = "Allow"
     actions   = ["codepipeline:StartPipelineExecution"]
-    resources = var.pipeline_target_arns
+    resources = ["*"]
   }
 }
 
